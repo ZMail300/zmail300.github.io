@@ -235,3 +235,549 @@ function welcome() {
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZMail | Your Email World</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f6fc;
+  color: #172554;
+}
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+header {
+  background: #102653;
+  color: white;
+  padding: 19px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 29px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logo span { color: #60a5fa; }
+
+nav button {
+  background: transparent;
+  border: 0;
+  color: white;
+  margin-left: 15px;
+}
+
+.primary {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  border-radius: 9px;
+  padding: 13px 23px;
+  font-weight: bold;
+}
+
+.primary:hover { background: #1d4ed8; }
+
+.secondary {
+  background: #eaf0ff;
+  color: #1d4ed8;
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 20px;
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* HOME */
+
+.hero {
+  text-align: center;
+  padding: 80px 20px 55px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 7vw, 65px);
+  margin: 10px;
+}
+
+.hero h1 span { color: #2563eb; }
+
+.hero p {
+  color: #64748b;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.preview {
+  max-width: 750px;
+  margin: 25px auto 60px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px #17255415;
+}
+
+.preview-title {
+  background: #102653;
+  color: white;
+  padding: 18px;
+  font-weight: bold;
+}
+
+.email-row {
+  padding: 20px;
+  border-bottom: 1px solid #e8edf5;
+}
+
+.email-row small {
+  display: block;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+/* LOGIN */
+
+.auth-area {
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 15px;
+}
+
+.auth-card {
+  width: 420px;
+  max-width: 100%;
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px #17255415;
+}
+
+.auth-card h1 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.field { margin: 18px 0; }
+
+.field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.field input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px #2563eb20;
+}
+
+.full { width: 100%; }
+
+.switch {
+  text-align: center;
+  margin-top: 22px;
+  color: #64748b;
+}
+
+.link {
+  color: #2563eb;
+  border: 0;
+  background: transparent;
+  font-weight: bold;
+}
+
+.demo-note {
+  background: #eff6ff;
+  color: #1e40af;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 18px;
+}
+
+/* INBOX */
+
+.dashboard {
+  display: flex;
+  min-height: 78vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #102653;
+  padding: 25px 15px;
+  color: white;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px;
+  margin: 7px 0;
+  color: white;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+}
+
+.sidebar button:hover,
+.sidebar button.selected {
+  background: #294477;
+}
+
+.inbox-content {
+  flex: 1;
+  padding: 30px;
+  min-width: 0;
+}
+
+.inbox-content h1 { margin-top: 0; }
+
+.message-list {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 25px;
+}
+
+.message {
+  padding: 20px;
+  border-bottom: 1px solid #e8edf5;
+  cursor: pointer;
+}
+
+.message:hover { background: #f1f5ff; }
+
+.message small {
+  display: block;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.compose-box {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+}
+
+.compose-box input,
+.compose-box textarea {
+  width: 100%;
+  padding: 13px;
+  margin: 9px 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.compose-box textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  background: #102653;
+  color: white;
+}
+
+@media(max-width:650px) {
+  header { padding: 16px; }
+  .logo { font-size: 23px; }
+  nav button { margin-left: 4px; }
+  .dashboard { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    padding: 8px;
+  }
+  .sidebar button {
+    min-width: 95px;
+    text-align: center;
+  }
+  .inbox-content { padding: 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo" onclick="showScreen('home')">
+    ✉ Z<span>Mail</span>
+  </div>
+  <nav>
+    <button onclick="showScreen('home')">Home</button>
+    <button onclick="showScreen('login')">Login</button>
+  </nav>
+</header>
+
+<!-- HOME -->
+
+<section id="home" class="screen active">
+
+  <div class="hero">
+    <h1>Your Email.<br><span>Your World.</span></h1>
+    <p>
+      Welcome to ZMail. A fresh email experience
+      designed to make communication simple,
+      beautiful and organised.
+    </p>
+    <button class="primary"
+      onclick="showScreen('login')">
+      Get Started →
+    </button>
+  </div>
+
+  <div class="preview">
+    <div class="preview-title">📥 ZMail Inbox Preview</div>
+    <div class="email-row">
+      <strong>Welcome to ZMail</strong>
+      <small>Your new email experience starts here.</small>
+    </div>
+    <div class="email-row">
+      <strong>School Updates</strong>
+      <small>Your latest announcements.</small>
+    </div>
+    <div class="email-row">
+      <strong>Friends</strong>
+      <small>Stay connected with everyone.</small>
+    </div>
+  </div>
+</section>
+
+<!-- LOGIN -->
+
+<section id="login" class="screen">
+  <div class="auth-area">
+    <div class="auth-card">
+      <h1>Welcome Back!</h1>
+      <p class="subtitle">Login to your ZMail account</p>
+
+      <form onsubmit="demoLogin(event)">
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com"
+            required>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password"
+            placeholder="Demo password only"
+            required>
+        </div>
+
+        <button class="primary full" type="submit">
+          Login to ZMail
+        </button>
+      </form>
+
+      <div class="switch">
+        New to ZMail?
+        <button class="link"
+          onclick="showScreen('signup')">
+          Create an account
+        </button>
+      </div>
+
+      <div class="demo-note">
+        Demo interface only. Real accounts and secure login
+        have not been connected yet. Never enter a real password.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGN UP -->
+
+<section id="signup" class="screen">
+  <div class="auth-area">
+    <div class="auth-card">
+      <h1>Join ZMail!</h1>
+      <p class="subtitle">Create your ZMail account</p>
+
+      <form onsubmit="demoSignup(event)">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your name" required>
+        </div>
+
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com"
+            required>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password"
+            placeholder="Demo password only"
+            required>
+        </div>
+
+        <button class="primary full" type="submit">
+          Create Account
+        </button>
+      </form>
+
+      <div class="switch">
+        Already have an account?
+        <button class="link"
+          onclick="showScreen('login')">
+          Login
+        </button>
+      </div>
+
+      <div class="demo-note">
+        Registration is a visual demo. No account is created
+        and no information is saved. Do not enter real passwords.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INBOX DEMO -->
+
+<section id="inbox" class="screen">
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <button class="selected" onclick="folder('Inbox')">
+        📥 Inbox
+      </button>
+      <button onclick="folder('Starred')">⭐ Starred</button>
+      <button onclick="folder('Sent')">📤 Sent</button>
+      <button onclick="folder('Drafts')">📝 Drafts</button>
+      <button onclick="showScreen('compose')">✏️ Compose</button>
+      <button onclick="showScreen('home')">↩ Logout</button>
+    </aside>
+
+    <div class="inbox-content">
+      <h1 id="folder-title">Inbox</h1>
+      <p>Welcome to your ZMail dashboard.</p>
+
+      <div class="message-list">
+        <div class="message">
+          <strong>ZMail Team</strong>
+          <small>Welcome to your new inbox!</small>
+        </div>
+        <div class="message">
+          <strong>Alex</strong>
+          <small>Hello! How are you?</small>
+        </div>
+        <div class="message">
+          <strong>School</strong>
+          <small>Your latest school updates.</small>
+        </div>
+      </div>
+
+      <div class="demo-note">
+        These are sample messages, not real emails.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPOSE -->
+
+<section id="compose" class="screen">
+  <div class="inbox-content">
+    <h1>Compose Message</h1>
+    <div class="compose-box">
+      <form onsubmit="demoSend(event)">
+        <input type="email" placeholder="Recipient email" required>
+        <input type="text" placeholder="Subject" required>
+        <textarea placeholder="Write your message..." required></textarea>
+        <button class="primary" type="submit">
+          Send Demo
+        </button>
+        <button class="secondary" type="button"
+          onclick="showScreen('inbox')">
+          Cancel
+        </button>
+      </form>
+      <div class="demo-note">
+        This is a demonstration. Messages cannot be delivered yet.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">✉ Z<span>Mail</span></div>
+  <p>Your Email. Your World.</p>
+  © 2026 ZMail
+</footer>
+
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function demoLogin(event) {
+  event.preventDefault();
+  alert("This is a demo. Real account login is not connected yet.");
+}
+
+function demoSignup(event) {
+  event.preventDefault();
+  alert("Registration is not connected yet. No account was created.");
+}
+
+function demoSend(event) {
+  event.preventDefault();
+  alert("Demo only! Your message has not been sent.");
+}
+
+function folder(name) {
+  document.getElementById('folder-title').textContent = name;
+  document.querySelectorAll('.sidebar button').forEach(btn => {
+    btn.classList.remove('selected');
+  });
+  event.currentTarget.classList.add('selected');
+}
+</script>
+
+</body>
+</html>
