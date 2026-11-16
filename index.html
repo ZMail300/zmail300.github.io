@@ -755,14 +755,46 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
-function demoLogin(event) {
+async function demoSignup(event) {
   event.preventDefault();
-  alert("This is a demo. Real account login is not connected yet.");
+
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+  const fullName = document.getElementById("signup-name").value;
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: fullName }
+    }
+  });
+
+  if (error) {
+    alert("Registration failed: " + error.message);
+    return;
+  }
+
+  alert("Registration successful! Check your email for confirmation.");
 }
 
-function demoSignup(event) {
+async function demoLogin(event) {
   event.preventDefault();
-  alert("Registration is not connected yet. No account was created.");
+
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert("Login failed: " + error.message);
+    return;
+  }
+
+  alert("Welcome to ZMail!");
 }
 
 function demoSend(event) {
